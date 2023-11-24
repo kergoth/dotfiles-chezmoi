@@ -1,0 +1,5 @@
+if [ -n "$TMUX" ]; then
+    tmux_update_env
+elif [ -n "$ATT_SESSION" ]; then
+    att-update-env
+fi

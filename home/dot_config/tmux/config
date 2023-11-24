@@ -1,0 +1,255 @@
+# Options {{{1
+# Tmux messages are displayed for 4 seconds
+set -g display-time 4000
+
+# Refresh 'status-left' and 'status-right' more often
+set -g status-interval 5
+
+# Emacs key bindings in tmux command prompt (prefix + :) are better than
+# vi keys, even for vim users
+set -g status-keys emacs
+
+# Use reattach-to-user-namespace on OSX
+if-shell 'echo "$OSTYPE" | grep -q "^darwin"' 'set -g default-command "reattach-to-user-namespace $SHELL --login"'
+
+# 256 color terminal
+set -g default-terminal "screen-256color"
+
+# Terminal overrides
+set -g -a terminal-overrides ',xterm-256color:Tc' # True color support.
+
+# Additional terminal variable
+set -g -a update-environment " TERM_PROGRAM"
+
+# Include vscode variables
+set -g -a update-environment " GIT_ASKPASS VSCODE_SERVER_DIR VSCODE_IPC_HOOK_CLI VSCODE_GIT_ASKPASS_MAIN VSCODE_GIT_ASKPASS_NODE VSCODE_GIT_ASKPASS_EXTRA_ARGS VSCODE_GIT_IPC_HANDLE"
+
+# direnv
+set -g -a update-environment " DIRENV_DIFF DIRENV_DIR DIRENV_WATCHES"
+set-environment -gu DIRENV_DIFF
+set-environment -gu DIRENV_DIR
+set-environment -gu DIRENV_WATCHES
+set-environment -gu DIRENV_LAYOUT
+
+# dntw
+set -g -a update-environment " DNTW_ID"
+set-environment -gu DNTW_ID
+
+# Improve key handling
+set -sg escape-time 0
+set -sg repeat-time 600
+
+# Show messages longer
+set -g display-time 3000
+
+# Keep command history and increase its limit
+set -g history-file ~/.local/share/tmux/history
+set -g history-limit 50000
+
+# Less stretching to get to the first item.
+set -g base-index 1
+setw -g pane-base-index 1
+
+# Renumber windows sequentially after closing any of them
+set -g renumber-windows on
+
+# Allow programs to change window titles
+set -g allow-rename on
+
+# Enable supported focus events
+set -g focus-events on
+
+# Generate xterm(1) -style function key sequences
+setw -g xterm-keys on
+
+# Enable WM window titles
+set -g set-titles on
+
+# WM window title string
+set -g set-titles-string "#W [#S:#I]"
+
+# Mouse support
+set -g mouse on
+
+bind-key -n DoubleClick1Pane \
+    select-pane \; \
+    copy-mode -M \; \
+    send-keys -X select-word
+
+bind-key -n TripleClick1Pane \
+    select-pane \; \
+    copy-mode -M \; \
+    send-keys -X select-line
+
+# Activity
+setw -g monitor-activity on
+set -g visual-activity off
+
+# Autorename sanely.
+setw -g automatic-rename on
+
+# Attempt to set the terminal clipboard content
+set -g set-clipboard on
+
+# Mappings {{{1
+# Change default prefix to something more convenient
+unbind C-b
+set -g prefix C-g
+bind C-g send-prefix
+
+# semi-colon, the lazy man's colon
+bind \; command-prompt
+
+# Reload the config.
+bind r source-file ~/.config/tmux/config \; display "Reloaded ~/.config/tmux/config"
+
+# easier and faster switching between next/prev window
+bind C-p previous-window
+bind C-n next-window
+
+# Choose a session
+bind S choose-session
+
+# Split pane with same directory
+bind s split-window -v -c '#{pane_current_path}'
+bind v split-window -h -c '#{pane_current_path}'
+
+# Switch panes
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# Pane resizing
+bind -r H resize-pane -L 5
+bind -r J resize-pane -D 5
+bind -r K resize-pane -U 5
+bind -r L resize-pane -R 5
+
+# Make prefix+0 go to window 10, not 0, as the numbering starts at 1
+bind 0 select-window -t :10
+
+# Window naming
+bind C new-window -c '#{pane_current_path}' \; command-prompt "rename-window '%%'"
+
+# Do not display the original window's name when renaming it. This makes
+# renaming faster since one does not need to first erase the original name
+bind , setw allow-rename off\; command-prompt -p "(rename-window '#W')" "rename-window '%%'"
+
+# Re-enable automatic-rename
+bind < setw automatic-rename on \; setw allow-rename on
+
+# Do the same for sessions
+bind '$' command-prompt -p "(rename-session '#S')" "rename-session '%%'"
+
+# Quick pane cycling
+bind g select-pane -t :.+
+
+# Copy mode
+setw -g mode-keys vi
+bind ` copy-mode
+unbind [
+bind -T copy-mode-vi v send-keys -X begin-selection
+bind -T copy-mode-vi V send-keys -X select-line
+bind -T copy-mode-vi C-v send-keys -X rectangle-toggle
+
+# Copy directly to system keyboard
+bind -T copy-mode-vi C-y send-keys -X copy-pipe-and-cancel pbcopy
+
+# Copy to system keyboard and paste immediately to tmux window
+bind -T copy-mode-vi C-Y send-keys -X copy-pipe-and-cancel 'pbcopy; tmux paste-buffer -s ""'
+
+# Copy selection
+bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+
+# Copy selection on right-click
+bind -T copy-mode MouseUp3Pane send-keys -X copy-selection-and-cancel
+bind -T copy-mode-vi MouseUp3Pane send-keys -X copy-selection-and-cancel
+
+# Copy tmux buffer into system clipboard
+bind C-y run "tmux show-buffer | pbcopy"
+
+# Paste from buffer
+bind C-p paste-buffer
+bind M-p paste-buffer
+bind p paste-buffer -s '' # Paste without CR feed.
+bind P choose-buffer "paste-buffer -b '%%' -s ''"
+
+# Search
+bind -T copy-mode-vi / command-prompt -i -p '/' 'send-keys -X search-forward-incremental "%%%"'
+bind -T copy-mode-vi ? command-prompt -i -p '?' 'send-keys -X search-backward-incremental "%%%"'
+
+# Search via copy mode
+bind / copy-mode \; send-keys '/'
+bind ? copy-mode \; send-keys '?'
+
+# C-l is taken over by vim style pane navigation
+bind C-S-l send-keys 'C-l'
+
+# Zoom the current pane
+bind z resize-pane -Z
+
+# Kill pane
+bind x kill-pane
+
+# Hacked up window management
+bind-key Enter run-shell "tmux-run-cmds $SHELL"
+bind-key R run-shell "tmux-run-cmds"
+
+## Kill (with confirmation)
+bind \\ confirm kill-session
+bind q run "tmux display-message -p '#{session_group}' | xargs tmux-kill-session-group"
+
+## New session
+#bind C confirm new-session
+
+# Enable/disable mouse mode
+bind m set mouse on\; display 'Mouse: On'
+bind M set mouse off\; display 'Mouse: Off'
+
+# Non-prefix mappings {{{2
+# More convenient detach
+bind -n C-\\ detach
+bind C-\\ send-keys 'C-\'
+
+# Smart pane switching with awareness of vim splits
+is_vim='echo "#{pane_current_command}" | grep -iqE "(^|\/)g?(view|n?vim?)(diff)?$"'
+bind -n C-h if-shell "$is_vim" "send-keys C-h" "select-pane -L"
+bind -n C-j if-shell "$is_vim" "send-keys C-j" "select-pane -D"
+bind -n C-k if-shell "$is_vim" "send-keys C-k" "select-pane -U"
+bind -n C-l if-shell "$is_vim" "send-keys C-l" "select-pane -R"
+bind -n C-S-\\ if-shell "$is_vim" "send-keys C-\\" "select-pane -l"
+
+# Smart pane switching in copy mode
+bind -T copy-mode-vi -n C-h if-shell "$is_vim" "send-keys C-h" "select-pane -L"
+bind -T copy-mode-vi -n C-j if-shell "$is_vim" "send-keys C-j" "select-pane -D"
+
+# Swap panes
+bind C-h swap-pane -s "left-of"
+bind C-j swap-pane -s "down-of"
+bind C-k swap-pane -s "top-of"
+bind C-l swap-pane -s "right-of"
+
+# Launch/App mappings {{{2
+# Open a man page
+bind K command-prompt "split-window 'exec env LESS_TERMCAP_mb=$(printf \"\e[1;31m\") LESS_TERMCAP_md=$(printf \"\e[1;31m\") LESS_TERMCAP_me=$(printf \"\e[0m\") LESS_TERMCAP_se=$(printf \"\e[0m\") LESS_TERMCAP_so=$(printf \"\e[1;44;33m\") LESS_TERMCAP_ue=$(printf \"\e[0m\") LESS_TERMCAP_us=$(printf \"\e[1;32m\") man %%'"
+
+# Quick view of processes
+if-shell "command -v htop" "bind '~' split-window 'exec htop'" "unbind '~'"
+
+# Style {{{1
+# tmuxline theme
+if-shell "test -f ~/.config/tmux/tmuxline.conf" "source ~/.config/tmux/tmuxline.conf"
+
+#set inactive/active window styles
+set -g window-style 'fg=colour247,bg=colour236'
+set -g window-active-style 'fg=colour250,bg=black'
+
+# set the pane border colors
+set -g pane-border-style fg=colour235,bg=colour238
+set -g pane-active-border-style fg=colour236,bg=colour250
+
+# External {{{1
+if-shell "test -f ~/.tmux_local.conf" "source ~/.tmux_local.conf"
+
+# vim: set et sts=4 fdm=marker fdl=0 :

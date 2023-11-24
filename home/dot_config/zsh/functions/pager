@@ -1,0 +1,9 @@
+pager () {
+    if [[ -t 1 ]]; then
+        ${PAGER:-less} "$@"
+    else
+        command cat "$@"
+    fi
+}
+
+pager "$@"

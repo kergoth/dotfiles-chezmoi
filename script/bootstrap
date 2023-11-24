@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+mkdir -p ~/.local/share
+rm -rf ~/.local/share/chezmoi
+ln -sf "$PWD" ~/.local/share/chezmoi
+sudo chown -R "$USER" "$HOME"
+
+if ! [ -d ./dotfiles ]; then
+    git clone https://github.com/kergoth/dotfiles ./dotfiles
+fi
+if ! [ -d ./dotfiles/vim ]; then
+    git clone https://github.com/kergoth/dotvim ./dotfiles/vim
+fi
+# ./dotfiles/script/install
+
+chezmoi apply -R

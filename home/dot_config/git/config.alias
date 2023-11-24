@@ -1,0 +1,199 @@
+# vim: set noet sts=0 sw=0 ft=gitconfig :
+
+[alias]
+	git = !exec git
+	ci = commit -s
+	ic = commit -s
+	cm = commit -s -m
+	cma = commit -sam
+	empty = commit --allow-empty-message -m ''
+	co = switch
+	back = switch -
+	cp = cherry-pick -x
+	au = add -u
+	chmod = "!mode="$1"; shift; git update-index --chmod=\"$mode\" \"$@\""
+	st = status -sb
+	sti = status -sb --ignored
+	br = branch
+	id = rev-parse
+	ls = ls-files --exclude-standard
+	lsi = ls-files --exclude-standard --directory -oi
+	ignored = lsi
+	llr = "!f() { cd \"$GIT_PREFIX\" && git ls-files -z --exclude-standard \"$@\" | xargs -0 -n1 -I{} -- git log -1 --format=\"%ai {}\" -- \"{}\" | sort; }; f"
+	ll = "!f() { cd \"$GIT_PREFIX\" && git ls-tree -z --name-only HEAD \"$@\" | xargs -0 -n1 -I{} -- git log -1 --format=\"%ai {}\" -- \"{}\" | sort; }; f"
+	lsl = ll
+	d = diff
+	dc = diff --cached
+	staged = diff --cached
+	r = remote -v
+	fetchall = fetch --all
+	b = branch -v
+	ri = revise -i
+	rc = rebase --continue
+	redate = rebase -f --ignore-date
+	rebase-test = !git -c core.editor=/bin/true rebase -ix
+	rebase-test-i = rebase -ix
+	source = config remote.origin.url
+	addnp = "!f(){ git add -N \"$@\" && git add -p \"$@\"; }; f"
+	fetch-noprompt = "!f() { GIT_SSH_COMMAND=\"ssh -oBatchMode=yes\" GIT_TERMINAL_PROMPT=0 git fetch \"$@\"; }; f"
+
+	# Pretty one line logs
+	lg = log --graph --pretty=lg --date=short
+	lgo = !git lga ^HEAD
+	lga = !git lg --all
+	l = !git lg -n25
+	ejlg = "!f(){ GIT_PAGER=\"emojify | $(git config core.pager || echo less -RFX)\" git lg \"$@\"; }; f"
+
+	# Log of all dangling commits
+	dangling = !git fsck | sed -n 's/^dangling commit //p' | git log --stdin --no-walk -g --first-parent -m -p
+	lgd = !git dangling
+
+	# Trimmed log with stat
+	logstat = log --compact-summary --stat=,,20
+
+	# History tree
+	show-tree = lg --all --decorate --simplify-by-decoration
+	tree = show-tree
+	tree-since-head = "!git show-tree --since=\"$(git diff-tree --pretty=format:%cd HEAD)\""
+	recent-tree = show-tree --since=last\\ week
+
+	# Upstream
+	tracking-remote = "!f() { git rev-parse --symbolic-full-name '@{u}' | sed -n 's,refs/remotes/\\([^/][^/]*\\)/.*,\\1,p'; }; f"
+	tracking-ref = rev-parse --symbolic-full-name @{u}
+	remote-ref = rev-parse --symbolic-full-name @{u}
+	in = !git fetch && git lg \"..@{u}\"
+	out = !git fetch && git lg \"@{push}..\"
+	out-diff = "!f(){ merge_base=${1:-$(git merge-base @{push} HEAD)}; git range-diff $merge_base..@{push} $merge_base..;}; f"
+
+	# Update without merge commits
+	up = !git fetch "$(git tracking-remote)" && git merge --no-ff "@{u}"
+
+	# Update with rebase, re-applying merges
+	purr = !git fetch "$(git tracking-remote)" && git rebase --rebase-merges "@{u}"
+	sync = "!f(){ orig_rev=\"$(git rev-parse HEAD)\"; git purr && git push && git --no-pager log \"${orig_rev:-ORIG_HEAD}...@{u}\" --stat --no-merges \"$@\"; }; f"
+
+	# Submit pull request. Technically just pull-request -f will do on its
+	# own, as it pushes on its own, but it's worth configuring the branch
+	# to ease later manual pushes.
+	submit = !git config-topic-branch && git push && git pull-request -f
+
+	# Rebase the current branch on its upstream
+	rebase-upstream = rebase -i @{u}
+	ru = !git rebase-upstream
+
+	# Run a range diff between HEAD and upstream
+	diff-out = range-diff @{push}...HEAD
+	diff-in = range-diff @{u}...HEAD
+	diff-upstream = range-diff @{u}...HEAD
+	diff-old-head = range-diff HEAD@{1}...HEAD
+
+	# Run git test-sequence against the commits we'll be pushing
+	test-outgoing = !git test-sequence @{u}..
+
+	# Push with lease
+	please = push --force-with-lease
+
+	# remove changes to a file from the index
+	unstage = reset HEAD --
+
+	# revert a file or files to the version in the index/HEAD
+	revert-file = revert-file-commit
+	revert-file-index = checkout --
+	revert-file-commit = checkout HEAD --
+	rf = revert-file
+	rfc = revert-file-commit
+	rfi = revert-file-index
+
+	# Amend the current commit, but don't prompt to edit the commit message
+	amend = commit --amend -C HEAD --allow-empty-message
+
+	# Reword the current commit
+	reword = revise -i -e --no-index HEAD~1
+
+	# Clean out the ignored files (i.e. to rebuild)
+	iclean = xclean -Xf
+
+	# Remove existing files from the index
+	forget = update-index --force-remove
+
+	# Stash
+	ss = stash save
+	sl = stash list --pretty=format:'%C(yellow)%gd%Creset: %Cgreen%cr%Creset - %s'
+	sln = "!f(){ GIT_PAGER=\"$(git config core.pager || echo ${PAGER:-less -RFX})\"; git -c color.ui=always stash list --pretty=format:'%C(yellow)%gd%Creset: %Cgreen%cr%Creset - %s' \"$@\" | grep -Ev 'WIP|Reset from' | eval $GIT_PAGER; }; f"
+	sa = stash apply
+	sd = stash drop
+	sp = stash pop
+	sb = stash branch
+
+	# Drop the current modifications. Stashes, then drops the stash,
+	# leaving a dangling commit with the changes.
+	drop = "!f(){ git mstash \"$@\" dropped && git stash drop; }; f"
+	dropped = dangling '--grep=: dropped'
+
+	# Save the current modifications to the stash, but keep them.
+	save = "!f(){ git mstash \"$@\" saved && git stash apply; }; f"
+	save-all = save --include-untracked
+
+	# Save to the stash, including the specified files, then remove them
+	save-rm = '!f(){ git save --include-untracked && rm \"$@\"; }; f'
+
+	# Pretty one line log showing commits in the last hour/day/week/month/etc
+	last = "!f(){ if [ $# -gt 0 ]; then since="$1"; shift; else since="week"; fi; git lg --since=\"last $since\" "$@"; }; f"
+
+	# Merge the contents of the previous HEAD ref (via reflog)
+	merge-old-head = merge --ff HEAD@{1}
+
+	# Show repo root
+	root = rev-parse --show-toplevel
+
+	# show list of contributors in descending order by number of commits
+	authors = shortlog -sne --no-merges
+
+	# given a string for an author, try to figure out full name and email:
+	whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>%n\" --author=\"$1\"' -"
+
+	# given any git object, try to show it briefly
+	whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+
+	# what changed between ORIG_HEAD and current
+	lc = log ORIG_HEAD.. --stat --no-merges
+
+	# list the largest files in the repository
+	ls-large-files = !git ls-tree -rl HEAD | sort -rnk 4 | head
+
+	# Diffstat of uncached changes, ignoring whitespace
+	ds = !git --no-pager diff --stat -M -w
+
+	# Edit the unmerged files
+	edit-unmerged = jump merge
+
+	# Compare two commits with interdiff (used to compare two commits which implement the same feature, for example)
+	intercommit = !sh -c 'git show "$1" > .git/commit1 && git show "$2" > .git/commit2 && interdiff .git/commit[12] | less -FRS' -
+
+	# For each submodule
+	subs = submodule foreach --recursive
+
+	# example: git subdo pull
+	subdo = submodule foreach --recursive git
+
+	# Update submodules
+	update-subs = submodule foreach --recursive "git fetch && git checkout `git remote-ref`"
+
+	# Third party tooling and scripts
+	as = assembler
+
+	# Hub
+	ci-status = !hub ci-status
+	delete = !hub delete
+	release = !hub release
+
+	# Github CLI
+	issue = !gh issue
+	issues = !gh issue list
+	pr = !gh pr
+	pull-request = !gh pr create
+	pull-requests = !gh pr list
+	repo = !gh repo
+	browse = !gh repo view
+	create = !gh repo create
+	fork = !gh repo fork --remote=false --clone=false
