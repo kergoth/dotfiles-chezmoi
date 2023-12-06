@@ -125,6 +125,14 @@ exact = true
 stripComponents = 1
 refreshPeriod = "168h"
 
+[".local/bin/git-alias"]
+type = "archive-file"
+url = "https://github.com/tj/git-extras/archive/master.tar.gz"
+path = "bin/git-alias"
+exact = true
+stripComponents = 1
+refreshPeriod = "168h"
+
 {{ if eq .chezmoi.os "windows" }}
 ["AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/RoamingState/archlinux-icon-crystal.svg"]
 type = "archive-file"
