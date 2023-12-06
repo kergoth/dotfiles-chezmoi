@@ -15,3 +15,7 @@ zstyle ':completion:*:*:git:*' user-commands fixup:'Create a fixup commit'
 if (( $+commands[brew] )); then
     compdef adminbrew=brew 2>/dev/null
 fi
+
+if [[ -d "$fzfdir/../share/fzf" ]]; then
+    . "$fzfdir/../share/fzf/completion.zsh"
+fi

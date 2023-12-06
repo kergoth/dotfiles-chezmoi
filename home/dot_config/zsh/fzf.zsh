@@ -7,6 +7,11 @@ export FZF_DEFAULT_OPTS='
 # For Zoxide
 export _ZO_FZF_OPTS=$FZF_DEFAULT_OPTS
 
+fzfdir=$(dirname "${commands[fzf]}")
+if [[ -d "$fzfdir/../share/fzf" ]]; then
+    . "$fzfdir/../share/fzf/key-bindings.zsh"
+fi
+
 if (( $+commands[fd] )); then
     export FZF_DEFAULT_COMMAND='fd -c always -t f ""'
     export FZF_ALT_C_COMMAND='fd -c always -t d ""'
