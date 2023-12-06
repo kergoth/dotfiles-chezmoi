@@ -4,3 +4,6 @@
 AppData/
 Documents/PowerShell/
 {{- end }}
+{{- if ne .chezmoi.os "darwin" }}
+Library/
+{{- end }}

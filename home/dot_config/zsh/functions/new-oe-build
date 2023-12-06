@@ -1,0 +1,127 @@
+force=0
+mel=
+imx=
+oe=
+args=
+while getopts fmioM:a:h opt; do
+    case "$opt" in
+        f)
+            force=1
+            ;;
+        m)
+            mel=1
+            ;;
+        i)
+            imx=1
+            ;;
+        o)
+            oe=1
+            ;;
+        M)
+            export MACHINE="$OPTARG"
+            ;;
+        a)
+            args="$OPTARG"
+            ;;
+        \? | h)
+            echo >&2 "${0##*/} [-m|-i|-o] [-f] [-M MACHINE] [-a ARGS] [BUILDDIR]"
+            return 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if [[ $# -eq 0 ]]; then
+    if [ -e conf/local.conf ] || [ -e conf/bblayers.conf ] || [ -e conf/templateconf.cfg ]; then
+        BUILDDIR="$PWD"
+    else
+        BUILDDIR="$PWD/build"
+    fi
+else
+    BUILDDIR="$1"
+    case "$BUILDDIR" in
+        /*)
+            ;;
+        *)
+            BUILDDIR="$PWD/$BUILDDIR"
+            ;;
+    esac
+fi
+
+(
+    set -e
+    set +u
+    rm -f "$BUILDDIR/.envrc"
+
+    if [ $force -eq 1 ]; then
+        echo >&2 "Removing existing build directory at $BUILDDIR"
+        if command -v bgrm >/dev/null 2>&1; then
+            bgrm "$BUILDDIR"
+        else
+            rm -rf "$BUILDDIR"
+        fi
+    fi
+
+    mkdir -p "$BUILDDIR"
+    topdir="$PWD"
+    cd "$BUILDDIR"
+    if [[ -n "$mel" ]]; then
+        if [ -d ../meta-sokol-flex ]; then
+            . ../meta-sokol-flex/setup-environment -b . $args ${MACHINE:-qemuarm64}
+        else
+            . ../meta-mentor/setup-environment -b . $args ${MACHINE:-qemuarm64}
+        fi || {
+            echo >&2 "Error: setup-environment failed"
+            return 1
+        }
+    elif [[ -n "$imx" ]]; then
+        case "$(cd "$BUILDDIR" && pwd -P)" in
+            "$(cd "$topdir" && pwd -P)/"*)
+                ;;
+            *)
+                echo >&2 "Error: BUILDDIR $BUILDDIR must be relative to topdir for imx builds"
+                return 1
+                ;;
+        esac
+        if [ -z "$DISTRO" ]; then
+            export DISTRO=fsl-imx-wayland
+        fi
+        bash -c 'cd "$1" && . ./imx-setup-release.sh -b "$2"' - "$topdir" "$(basename "$BUILDDIR")"
+    elif [[ -z "$oe" ]] && [[ -d ../meta-polarfire-soc-yocto-bsp ]]; then
+        if ! [[ -d ../openembedded-core ]] && [[ -d ../oe-core ]]; then
+            ln -sf oe-core ../openembedded-core
+        fi
+        bash -c "cd .. && . ./meta-polarfire-soc-yocto-bsp/polarfire-soc_yocto_setup.sh"
+        if ! echo "$BUILDDIR" | grep -q "/build$"; then
+            cp -av ../build/* .
+            rm -rf ../build
+        fi
+    elif [[ -z "$oe" ]] && [[ -d ../industrial-core ]]; then
+        bash -c '. ../industrial-core/setup-environment "$@"' - -b . $args ${MACHINE:-industrial-pc}
+    elif ! [[ -d ../oe-core ]] && ! [[ -d ../openembedded-core ]] && ! [[ -d ../isar ]] && ! [[ -d ../poky ]]; then
+        echo >&2 "Error: no setup script present"
+        cd - >/dev/null
+        rmdir "$BUILDDIR" >/dev/null 2>&1 || :
+        return 1
+    fi
+
+    for site_conf in "$topdir"/site.conf "$topdir"/../site.conf ~/.oe/conf/site.conf; do
+        if [ -e "$site_conf" ]; then
+            ln -sf "$site_conf" conf/site.conf
+        fi
+    done
+
+    for linkdir in downloads sstate-cache cached-binaries; do
+        if [ -e ../"$linkdir" ]; then
+            ln -sfv ../"$linkdir" .
+        fi
+    done
+
+    if [ -e ~/mel/workflow ]; then
+        cp -av ~/mel/workflow/envrc-build .envrc
+    fi
+
+    direnv allow
+) || return 1
+
+cd "$BUILDDIR"

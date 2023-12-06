@@ -1,0 +1,10 @@
+gi () {
+    if [ $# -gt 0 ]; then
+        arg1="$1"
+        shift
+        set -- "${arg1#t}" "$@"
+    fi
+    git "$@"
+}
+
+gi "$@"

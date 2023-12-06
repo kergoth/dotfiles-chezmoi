@@ -157,6 +157,24 @@ alias common_prefix='python -c "import os,sys; print(os.path.commonprefix(sys.ar
 alias ddi=ddimage-sd
 alias pg=pager
 
+# bitbake
+if (( $+commands[rg] )); then
+    alias bbrg="command rg -t bitbake"
+    alias bbg=bbrg
+elif (( $+commands[pt] )); then
+    alias bbag="pt -G '\.(bb|bbappend|inc|conf)$'"
+    alias bbg=bbag
+elif (( $+commands[ag] )); then
+    alias bbag="ag -G '\.(bb|bbappend|inc|conf)$'"
+    alias bbg=bbag
+elif (( $+commands[ack] )); then
+    alias bback='ack --type=bitbake'
+    alias bbag=bback
+    alias bbg=bbag
+fi
+alias bbfd="fd -t f -e bb -e inc -e conf -e bbclass -e bbappend"
+alias bbfdf="bbfd ''"
+
 # zmv
 autoload -U zmv
 alias lln="noglob zmv -WL"
@@ -174,12 +192,6 @@ zsh-profile-startup-stats () {
         sort -nrk2 | uniq -f 1 | stats --trim-outliers | less -RSXFE
 }
 
-# Global
-alias -g G='| grep'
-alias -g L='| less'
-alias -g X='| nlxargs'
-alias -g W='| while read -r '
-
 # Git
 alias gitcolor='git -c color.ui=always'
 alias gitnofancy='git -c "core.pager=diff-highlight | less --tabs=4 -RFX"'
@@ -190,3 +202,39 @@ alias gncl='git clone'
 
 alias ghcl='gh repo clone'
 alias gist='gh gist create'
+
+# WSL
+if [[ $OSTYPE = WSL ]]; then
+    winver () {
+        ( cd "$USERPROFILE" && cmd.exe /c ver )
+    }
+
+    if ! (( $+commands[xdg-open] )); then
+        alias open=wsl-open
+    fi
+
+    alias cdw='cd "$USERPROFILE"'
+    alias start="cmd.exe /c start"
+    alias cmd=cmd.exe
+    alias wsl=wsl.exe
+    alias adminwsl="psadmin wsl.exe"
+    alias wt=wt.exe
+    alias adminwt="psadmin 'shell:appsFolder\Microsoft.WindowsTerminal_8wekyb3d8bbwe!App'"
+    alias adb=adb.exe
+
+    alias trash=recycle
+
+    if [[ -z "$WSL_IS_ADMIN" ]]; then
+        if net.exe session >/dev/null 2>&1; then
+            export WSL_IS_ADMIN=1
+        else
+            export WSL_IS_ADMIN=0
+        fi
+    fi
+fi
+
+# Global
+alias -g G='| grep'
+alias -g L='| less'
+alias -g X='| nlxargs'
+alias -g W='| while read -r '

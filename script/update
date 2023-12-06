@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+chezmoi init --apply
+if ! command -v nix >/dev/null 2>&1; then
+    echo >&2 "Error: nix must be installed to update"
+    exit 1
+fi
+
+cd ~/.config/home-manager
+nix flake update
+chezmoi re-add flake.lock
+nix run 'home-manager/master' -- switch

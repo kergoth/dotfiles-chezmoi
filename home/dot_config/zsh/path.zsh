@@ -21,14 +21,35 @@ if [[ -n $GOPATH ]]; then
     path=($GOPATH/bin $path)
 fi
 
+if [[ -n $CARGO_HOME ]]; then
+    path=($CARGO_HOME/bin $path)
+fi
+
+# FreeBSD
+path=($path /usr/local/llvm*/bin(N))
+
 if [[ $OSTYPE =~ darwin ]]; then
     path=(
         $HOME/Library/Perl/*/bin(N)
         $HOME/Library/Python/*/bin(N)
         $HOMEBREW_PREFIX/opt/ccache/libexec
         $path
+        /System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources
     )
 fi
+
+if [[ $OSTYPE = WSL ]]; then
+    path=(${0:h:A}/scripts-wsl $path)
+
+    # %PATH% isn't necessarily set when we ssh in
+    path=($WslDisks/c/Windows $WslDisks/c/Windows/SysWOW64 $WslDisks/c/Windows/System32 $path)
+
+    # adb
+    path=($WslDisks/c/Android/android-sdk/platform-tools $path)
+fi
+
+typeset -gxT PYTHONPATH pythonpath
+path=($POETRY_HOME/bin $path)
 
 path=( ${(u)^path:A}(N-/) )
 

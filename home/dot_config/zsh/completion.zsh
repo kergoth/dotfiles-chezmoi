@@ -11,3 +11,7 @@ zstyle ':completion:*' insert-tab pending
 export GIT_COMPLETION_CHECKOUT_NO_GUESS=1
 
 zstyle ':completion:*:*:git:*' user-commands fixup:'Create a fixup commit'
+
+if (( $+commands[brew] )); then
+    compdef adminbrew=brew 2>/dev/null
+fi

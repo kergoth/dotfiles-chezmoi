@@ -1,0 +1,20 @@
+# fo [FUZZY PATTERN] - Open the selected file with the default editor
+#   - Bypass fuzzy finder if there's only one match (--select-1)
+#   - Exit if there's no match (--exit-0)
+#   - CTRL-O to open with `open` command,
+#   - CTRL-E or Enter key to open with the $EDITOR
+
+local out key files
+out=$(cd "${2:-$PWD}" && fzf-tmux --select-1 --multi --query="$1" --exit-0 --expect=ctrl-o,ctrl-e | grep -v '^$' | sed "s#^#${2:-$PWD}/#") || return $?
+if [[ -z $out ]]; then
+    return 1
+fi
+key=$(head -1 <<< "$out")
+files=("${(@f)out}")
+if [[ "$key" = ctrl-o ]]; then
+    print -s open $files
+    open $files
+else
+    print -s ${=EDITOR:-vim} $files
+    ${=EDITOR:-vim} $files
+fi

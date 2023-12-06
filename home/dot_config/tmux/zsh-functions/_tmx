@@ -1,0 +1,13 @@
+#compdef tmx
+
+_tmx() {
+  local -a groups
+  tmux_groups=($(tmx -l))
+  _arguments '*:groups:($tmux_groups)'
+
+  return 0
+}
+
+_tmx
+
+# vim: ft=zsh sw=2 ts=2 et

@@ -1,0 +1,21 @@
+{{- $email := promptStringOnce . "email" "Email address" -}}
+{{- $name := promptStringOnce . "name" "Full name" -}}
+{{- $github_username := promptStringOnce . "github_username" "GitHub Username" -}}
+
+pager = "git-pager"
+
+[data]
+    email = {{ $email | quote }}
+    name = {{ $name | quote }}
+    github_username = {{ $github_username | quote }}
+{{- if eq .chezmoi.arch "amd64" }}
+    nixarch = "x86_64"
+{{- else }}
+    nixarch = "invalid"
+{{- end }}
+
+[merge]
+    #command = "nvim"
+    #args = ["-d", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]
+    command = "code"
+    args = ["--wait", "--merge", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}"]

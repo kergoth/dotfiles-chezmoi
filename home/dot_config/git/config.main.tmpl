@@ -4,6 +4,14 @@
 	attributesfile = ~/.config/git/attributes
 	whitespace = cr-at-eol
 
+{{- if eq .chezmoi.os "windows" }}
+[core]
+	pager = less
+
+[credential]
+	helper = manager	
+{{- end }}
+
 [init]
 	defaultBranch = main
 
