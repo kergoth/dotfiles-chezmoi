@@ -109,6 +109,22 @@ url = "https://storage.googleapis.com/git-repo-downloads/repo"
 executable = true
 refreshPeriod = "168h"
 
+[".local/bin/git-j"]
+type = "archive-file"
+url = "https://github.com/beanbaginc/dev-goodies/archive/master.tar.gz"
+path = "bin/git-j"
+exact = true
+stripComponents = 1
+refreshPeriod = "168h"
+
+[".local/bin/git-rebase-chain"]
+type = "archive-file"
+url = "https://github.com/beanbaginc/dev-goodies/archive/master.tar.gz"
+path = "bin/git-rebase-chain"
+exact = true
+stripComponents = 1
+refreshPeriod = "168h"
+
 {{ if eq .chezmoi.os "windows" }}
 ["AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/RoamingState/archlinux-icon-crystal.svg"]
 type = "archive-file"
