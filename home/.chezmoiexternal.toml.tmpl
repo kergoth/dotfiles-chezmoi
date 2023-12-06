@@ -71,14 +71,6 @@ exact = true
 stripComponents = 1
 refreshPeriod = "168h"
 
-# [".local/bin/git-cherry-tree"]
-# type = "archive-file"
-# url = "https://github.com/kergoth/git-cherry-tree/archive/master.tar.gz"
-# path = "git-cherry-tree"
-# exact = true
-# stripComponents = 1
-# refreshPeriod = "168h"
-
 ["bin"]
 type = "git-repo"
 url = "https://github.com/kergoth/scripts"
@@ -104,6 +96,12 @@ path = "vimrc.redir"
 exact = true
 stripComponents = 1
 refreshPeriod = "168h"
+
+[".local/bin"]
+type = "archive"
+url = "https://github.com/eth-p/bat-extras/releases/download/v2023.09.19/bat-extras-202309.19.zip"
+refreshPeriod = "168h"
+stripComponents = 1
 
 [".local/bin/repo"]
 type = "file"
