@@ -33,3 +33,7 @@ pager = "git-pager"
     #args = ["-d", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]
     command = "code"
     args = ["--wait", "--merge", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}"]
+
+[hooks.update.post]
+command = "bash"
+args = ["-c", "$CHEZMOI_SOURCE_DIR/hook_post_update"]

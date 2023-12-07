@@ -38,8 +38,10 @@ fi
 echo >&2 "Updating chezmoi"
 chezmoi upgrade
 
-echo >&2 "Updating dotfiles repository"
-chezmoi update -R
+if [ -z "${CHEZMOI_HOOK:-}" ]; then
+    echo >&2 "Updating dotfiles repository"
+    chezmoi update -R
+fi
 
 echo >&2 "Updating Home Manager packages"
 cd ~/.config/home-manager
