@@ -33,8 +33,8 @@
 		"WORKSPACE_PATH": "${localWorkspaceFolder}",
 		"WORKSPACE_NAME": "${localWorkspaceFolderBasename}"
 	},
-	// "workspaceFolder": "/workspace",
-	// "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+	"workspaceFolder": "/home/vscode/.local/share/chezmoi",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/.local/share/chezmoi,type=bind,consistency=cached",
 	"mounts": [
 		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
 		"source=devcontainer-bashhistory,target=/commandhistory,type=volume",
