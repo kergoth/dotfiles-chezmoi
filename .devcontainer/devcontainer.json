@@ -42,7 +42,7 @@
 		"target=/home/vscode/.vscode-server,type=volume"
 		// "source=${localWorkspaceFolder},target=/home/vscode/.local/share/chezmoi,type=bind,consistency=cached"
 	],
-	"postCreateCommand": "./script/bootstrap",
+	"postCreateCommand": "./script/bootstrap-devcontainer",
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 	// Use 'postCreateCommand' to run commands after the container is created.
