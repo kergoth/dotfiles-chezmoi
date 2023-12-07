@@ -40,12 +40,12 @@ USER vscode
 RUN eval "$(curl -Ssf --proto '=https' https://pkgx.sh)"
 
 # Install repo, devbox
-RUN mkdir -p ~/bin \
-    && PATH="${HOME}/bin:${PATH}" \
-    && curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo \
-    && chmod a+rx ~/bin/repo \
-    && curl -fsSL https://releases.jetpack.io/devbox >~/bin/devbox \
-    && chmod a+rx ~/bin/devbox
+RUN mkdir -p ~/.local/bin \
+    && PATH="${HOME}/.local/bin:${PATH}" \
+    && curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.local/bin/repo \
+    && chmod a+rx ~/.local/bin/repo \
+    && curl -fsSL https://releases.jetpack.io/devbox >~/.local/bin/devbox \
+    && chmod a+rx ~/.local/bin/devbox
 
 # Install zoxide
 RUN eval "$(curl -Ssf --proto '=https' https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh)"
