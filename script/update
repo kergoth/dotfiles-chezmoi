@@ -35,7 +35,8 @@ if ! command -v nix >/dev/null 2>&1; then
     exit 1
 fi
 
-chezmoi apply ~/.config/home-manager
+chezmoi apply -R
+
 cd ~/.config/home-manager
 nix flake update 2>&1 | (grep -Ev '(^warning:|searching up)' || :) | tee "$tmpfile"
 if ! [ -s "$tmpfile" ]; then
