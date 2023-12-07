@@ -1,5 +1,3 @@
-**/*.zwc
-
 {{- if ne .chezmoi.os "windows" }}
 AppData/
 Documents/PowerShell/
@@ -7,3 +5,32 @@ Documents/PowerShell/
 {{- if ne .chezmoi.os "darwin" }}
 Library/
 {{- end }}
+
+.bash_history
+.cache
+.config/chezmoi
+.config/environment.d/10-home-manager.conf
+.config/gh/hosts.yml
+.config/git/config
+.config/vscode-dev-containers
+.devcontainer
+.local/bin
+.local/lib
+.local/pipx
+.local/share/*
+!.local/share/gnupg
+.local/state
+.nix-defexpr
+.nix-profile
+.oh-my-zsh
+.ssh/known_hosts
+.vscode-server
+**/.zcompdump
+**/*.iln*
+**/*.zwc
+
+# I don't maintain a bash configuration
+.profile
+.bashrc
+.bash_profile
+.bash_logout
