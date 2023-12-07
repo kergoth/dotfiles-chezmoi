@@ -27,8 +27,10 @@ stripComponents = 1
 refreshPeriod = "168h"
 
 [".config/zsh/themes/powerlevel10k"]
-type = "git-repo"
-url = "https://github.com/romkatv/powerlevel10k"
+type = "archive"
+url = "https://github.com/romkatv/powerlevel10k/archive/master.tar.gz"
+exact = true
+stripComponents = 1
 refreshPeriod = "168h"
 
 [".config/zsh/plugins/bd"]
@@ -141,3 +143,7 @@ path = "icons/archlinux-icon-crystal-32.svg"
 refreshPeriod = "168h"
 stripComponents = 1
 {{- end }}
+
+# Fallbacks for cases where newer tools are unavailable (ex. older hosts)
+# - dtrx, if unar is unavailable
+# - fasd, if zoxide is unavailable
