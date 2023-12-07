@@ -57,6 +57,18 @@ exact = true
 stripComponents = 1
 refreshPeriod = "168h"
 
+[".config/zsh/plugins/zbell/zbell.plugin.sh"]
+type = "file"
+url = "https://gist.githubusercontent.com/jpouellet/5278239/raw/e0b06247f3ecd6ca3de341c54ba8d85de7ef6566/zbell.sh"
+refreshPeriod = "168h"
+
+[".config/zsh/plugins/nix-shell"]
+type = "archive"
+url = "https://github.com/chisui/zsh-nix-shell/archive/master.tar.gz"
+exact = true
+stripComponents = 1
+refreshPeriod = "168h"
+
 [".config/bat/syntaxes/BitBake.sublime-syntax"]
 type = "archive-file"
 url = "https://github.com/Driim/bitbake-syntax/archive/master.tar.gz"
@@ -133,6 +145,20 @@ url = "https://github.com/tj/git-extras/archive/master.tar.gz"
 path = "bin/git-alias"
 exact = true
 stripComponents = 1
+refreshPeriod = "168h"
+
+[".local/bin/vipe"]
+type = "archive-file"
+url = "https://github.com/madx/moreutils/archive/master.tar.gz"
+path = "vipe"
+exact = true
+stripComponents = 1
+refreshPeriod = "168h"
+
+[".local/bin/wsl-open"]
+type = "file"
+url = "https://raw.githubusercontent.com/4U6U57/wsl-open/master/wsl-open.sh"
+executable = true
 refreshPeriod = "168h"
 
 {{ if eq .chezmoi.os "windows" }}
