@@ -20,6 +20,7 @@ Library/
 .local/share/*
 !.local/share/gnupg
 !.local/share/zsh
+.local/share/zsh/*
 .local/state
 .nix-defexpr
 .nix-profile
