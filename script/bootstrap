@@ -2,9 +2,4 @@
 
 set -euo pipefail
 
-sudo chown -R "$USER" "$HOME"
-
-mkdir -p ~/.local/share
-rm -rf ~/.local/share/chezmoi
-ln -sf "$PWD" ~/.local/share/chezmoi
-chezmoi init --apply
+chezmoi init --apply kergoth/dotfiles-chezmoi
