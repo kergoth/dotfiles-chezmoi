@@ -1,18 +1,32 @@
-{{- $email := promptStringOnce . "email" "Email address" -}}
-{{- $name := promptStringOnce . "name" "Full name" -}}
-{{- $github_username := promptStringOnce . "github_username" "GitHub Username" -}}
+{{- $codespaces:= env "CODESPACES" | not | not }}
+{{- $devcontainer:= env "REMOTE_CONTAINERS" | not | not }}
+{{- $container := or $devcontainer $codespaces }}
 
+{{- $chezmoiForce := or (has "--force" .chezmoi.args) (has "--force=true" .chezmoi.args) -}}
+{{- $interactive := and stdinIsATTY (not $chezmoiForce) -}}
+
+sourceDir = {{ .chezmoi.sourceDir | quote }}
 pager = "git-pager"
 
 [data]
-    email = {{ $email | quote }}
-    name = {{ $name | quote }}
-    github_username = {{ $github_username | quote }}
+{{- if or $container (not $interactive) }}
+    email = "kergoth@gmail.com"
+    name = "Christopher Larson"
+    github_username = "kergoth"
+{{- else }}
+    email = {{ promptStringOnce . "email" "Email address" "kergoth@gmail.com" | quote }}
+    name = {{ promptStringOnce . "name" "Full name" "Christopher Larson" | quote }}
+    github_username = {{ promptStringOnce . "github_username" "GitHub username" "kergoth" | quote }}
+{{- end }}
+
 {{- if eq .chezmoi.arch "amd64" }}
     nixarch = "x86_64"
 {{- else }}
     nixarch = "invalid"
 {{- end }}
+    in_codespace = {{ $codespaces }}
+    in_devcontainer = {{ $devcontainer }}
+    in_container = {{ $container }}
 
 [merge]
     #command = "nvim"
