@@ -19,5 +19,7 @@ else
     }
 fi
 
-home-manager-build
-hm switch
+configuration="${1:-$USER}"
+package="$HOME/.config/home-manager#homeConfigurations.$configuration.activationPackage"
+nix build --no-link "$package"
+home-manager-nvd "$configuration"
