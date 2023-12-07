@@ -2,30 +2,30 @@
 
 set -euo pipefail
 
-usage () {
+usage() {
     echo >&2 "${0##*/} [CONFIGURATION]"
     exit 2
 }
 
-nix () {
+nix() {
     command nix --experimental-features 'nix-command flakes' "$@"
 }
 
 if ! command -v home-manager &>/dev/null; then
-    hm () {
+    hm() {
         nix run --no-write-lock-file github:nix-community/home-manager/ -- "$@"
     }
 else
-    hm () {
+    hm() {
         home-manager "$@"
     }
 fi
 
 while getopts h opt; do
     case "$opt" in
-        \? | h)
-            usage
-            ;;
+    \? | h)
+        usage
+        ;;
     esac
 done
 shift $((OPTIND - 1))
@@ -39,7 +39,7 @@ fi
 
 generation="$(hm generations | head -n 1 | cut -d" " -f7)" || :
 if [ -n "$generation" ]; then
-    package=".#homeConfigurations.$configuration.activationPackage"
+    package="$HOME/.config/home-manager#homeConfigurations.$configuration.activationPackage"
     new_generation="$(nix path-info "$package" 2>/dev/null)" || :
 
     if command -v nvd >/dev/null 2>&1 && [ -n "$generation" ] && [ -n "$new_generation" ] && [ "$generation" != "$new_generation" ]; then
