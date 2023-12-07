@@ -2,4 +2,7 @@
 
 set -euo pipefail
 
-chezmoi init --apply kergoth/dotfiles-chezmoi
+scriptdir=$(cd "$(dirname "$0")" && pwd -P)
+sourcedir=$(dirname "$scriptdir")
+
+chezmoi init --apply --source "$sourcedir" kergoth/dotfiles-chezmoi
