@@ -19,6 +19,7 @@ Library/
 .local/pipx
 .local/share/*
 !.local/share/gnupg
+!.local/share/zsh
 .local/state
 .nix-defexpr
 .nix-profile
