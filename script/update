@@ -12,6 +12,6 @@ if ! command -v nix >/dev/null 2>&1; then
 fi
 
 cd ~/.config/home-manager
-nix flake update
+nix --experimental-features 'nix-command flakes'flake update
 chezmoi re-add flake.lock
 home-manager-switch
