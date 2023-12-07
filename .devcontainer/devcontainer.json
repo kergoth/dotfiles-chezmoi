@@ -38,9 +38,8 @@
 	"mounts": [
 		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
 		"source=devcontainer-bashhistory,target=/commandhistory,type=volume",
-		"source=profile,target=/home/vscode,type=volume",
+		// "source=profile,target=/home/vscode,type=volume",
 		"target=/home/vscode/.vscode-server,type=volume"
-		// "source=${localWorkspaceFolder},target=/home/vscode/.local/share/chezmoi,type=bind,consistency=cached"
 	],
 	"postCreateCommand": "./script/bootstrap-devcontainer",
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
