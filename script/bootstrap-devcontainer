@@ -6,6 +6,6 @@ scriptdir=$(cd "$(dirname "$0")" && pwd -P)
 sourcedir=$(dirname "$scriptdir")
 PATH="$PATH:$scriptdir:$sourcedir/scripts"
 
-sudo chown -R "$USER" "$HOME"
+sudo chown -R "$USER" "$HOME" 2>/dev/null || :
 
 bootstrap
