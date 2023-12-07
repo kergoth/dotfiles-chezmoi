@@ -3,15 +3,71 @@
 set -euo pipefail
 
 scriptdir=$(cd "$(dirname "$0")" && pwd -P)
-PATH="$PATH:$scriptdir:$scriptdir/../scripts"
+sourcedir=$(dirname "$scriptdir")
+PATH="$PATH:$scriptdir:$sourcedir/scripts"
 
-chezmoi init --apply
+on_exit() {
+    if [ -n "$tmpfile" ]; then
+        rm -f "$tmpfile"
+    fi
+    (cd "$sourcedir" && git checkout HEAD -- home/dot_config/home-manager/flake.lock &>/dev/null)
+}
+
+nix() {
+    command nix --experimental-features 'nix-command flakes' "$@"
+}
+
+if ! command -v home-manager &>/dev/null; then
+    hm() {
+        nix run --no-write-lock-file github:nix-community/home-manager/ -- "$@"
+    }
+else
+    hm() {
+        home-manager "$@"
+    }
+fi
+
+tmpfile=$(mktemp -t "${0##*/}.XXXXXX")
+trap on_exit EXIT INT TERM
+
 if ! command -v nix >/dev/null 2>&1; then
     echo >&2 "Error: nix must be installed to update"
     exit 1
 fi
 
+chezmoi apply ~/.config/home-manager
 cd ~/.config/home-manager
-nix --experimental-features 'nix-command flakes' flake update
+nix flake update 2>&1 | (grep -Ev '(^warning:|searching up)' || :) | tee "$tmpfile"
+if ! [ -s "$tmpfile" ]; then
+    echo >&2 "No update to the home-manager inputs available"
+    exit 0
+fi
+
 chezmoi re-add flake.lock
-home-manager-switch
+
+{
+    echo 'Home Manager Update'
+    echo
+    echo 'Home Manager input changes:'
+    echo
+    cat "$tmpfile"
+} >"$sourcedir/.git/COMMIT_EDITMSG"
+
+home-manager-build | tee "$tmpfile"
+if [ -s "$tmpfile" ]; then
+    if grep -q "No version or selection state changes." "$tmpfile"; then
+        echo >&2 "No update to the home-manager packages available"
+        exit 0
+    fi
+    {
+        echo
+        echo "Home Manager packages changes:"
+        echo
+        cat "$tmpfile"
+    } >>"$sourcedir/.git/COMMIT_EDITMSG"
+fi
+
+echo >&2 "Committing Home Manager updates"
+(cd "$sourcedir" && git commit -F .git/COMMIT_EDITMSG home/dot_config/home-manager/flake.lock)
+
+hm switch
