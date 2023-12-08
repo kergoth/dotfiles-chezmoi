@@ -66,19 +66,13 @@ done
 
 # initialize autocomplete here, otherwise functions won't be loaded
 autoload -U compinit
-# only check for new functions once a day
 ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
-if [[ -n $ZSH_COMPDUMP(#qN.mh+24) ]]; then
-    if [[ $PSEUDO_DISABLED = 0 ]]; then
-        # When running under pseudo, we're actually still ourselves, so silently
-        # ignore the compaudit.
-        compinit -u -d $ZSH_COMPDUMP
-    else
-        compinit -d $ZSH_COMPDUMP
-    fi
-    touch $ZSH_COMPDUMP
+if [[ $PSEUDO_DISABLED = 0 ]]; then
+    # When running under pseudo, we're actually still ourselves, so silently
+    # ignore the compaudit.
+    compinit -u -d $ZSH_COMPDUMP
 else
-  compinit -C -d $ZSH_COMPDUMP
+    compinit -d $ZSH_COMPDUMP
 fi
 
 # This is set here rather than config.zsh due to LS_COLORS being defined in
