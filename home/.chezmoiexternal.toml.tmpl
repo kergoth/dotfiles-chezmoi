@@ -161,6 +161,54 @@ url = "https://raw.githubusercontent.com/4U6U57/wsl-open/master/wsl-open.sh"
 executable = true
 refreshPeriod = "168h"
 
+[".local/bin/fasd"]
+type = "archive-file"
+url = "https://github.com/clvv/fasd/archive/master.tar.gz"
+path = "fasd"
+exact = true
+stripComponents = 1
+refreshPeriod = "168h"
+
+[".local/bin/zsh_sort_timings"]
+type = "file"
+url = "https://gist.githubusercontent.com/bdesham/2d7ef99f93b226be29e01cadcad37405/raw/353e5178686df9e3aea6e0802d4a217420938c28/sort_timings.zsh"
+executable = true
+
+[".local/bin/vim-profiler"]
+type = "archive-file"
+url = "https://github.com/bchretien/vim-profiler/archive/master.tar.gz"
+path = "vim-profiler.py"
+executable = true
+exact = true
+stripComponents = 1
+refreshPeriod = "168h"
+
+[".local/bin/tmux-resize-adaptable"]
+type = "archive-file"
+url = "https://github.com/tony/tmux-config/archive/master.tar.gz"
+path = "scripts/resize-adaptable.sh"
+executable = true
+exact = true
+stripComponents = 1
+refreshPeriod = "168h"
+
+[".local/bin/ifne"]
+type = "archive-file"
+url = "https://github.com/fumiyas/home-commands/archive/master.tar.gz"
+path = "ifne"
+executable = true
+exact = true
+stripComponents = 1
+refreshPeriod = "168h"
+
+[".local/bin/tldr"]
+type = "archive-file"
+url = "https://github.com/raylee/tldr-sh-client/archive/main.tar.gz"
+path = "tldr"
+exact = true
+stripComponents = 1
+refreshPeriod = "168h"
+
 {{ if eq .chezmoi.os "windows" }}
 ["AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/RoamingState/archlinux-icon-crystal.svg"]
 type = "archive-file"
