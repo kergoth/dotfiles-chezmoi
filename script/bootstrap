@@ -5,4 +5,8 @@ set -euo pipefail
 scriptdir=$(cd "$(dirname "$0")" && pwd -P)
 sourcedir=$(dirname "$scriptdir")
 
-chezmoi init --apply --source "$sourcedir" kergoth/dotfiles-chezmoi
+if ! [ -e "$sourcedir/.chezmoiroot" ]; then
+    sourcedir=
+fi
+
+chezmoi init --apply ${sourcedir:+--source "$sourcedir"} kergoth/dotfiles-chezmoi
