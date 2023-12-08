@@ -17,9 +17,9 @@ setopt NO_BG_NICE # don't nice background tasks
 setopt NO_HUP
 setopt NO_LIST_BEEP
 setopt LOCAL_OPTIONS # allow functions to have local options
-setopt LOCAL_TRAPS # allow functions to have local traps
+setopt LOCAL_TRAPS   # allow functions to have local traps
 setopt HIST_VERIFY
-setopt SHARE_HISTORY # share history between sessions ???
+setopt SHARE_HISTORY    # share history between sessions ???
 setopt EXTENDED_HISTORY # add timestamps to history
 setopt PROMPT_SUBST
 setopt CORRECT
@@ -35,7 +35,7 @@ setopt auto_cd
 setopt INC_APPEND_HISTORY
 setopt NO_SHARE_HISTORY
 
-setopt HIST_IGNORE_ALL_DUPS  # don't record dupes in history
+setopt HIST_IGNORE_ALL_DUPS # don't record dupes in history
 setopt HIST_IGNORE_SPACE
 setopt HIST_REDUCE_BLANKS
 
@@ -88,9 +88,9 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 
 # Zaw interface configuration
 zstyle ':filter-select:highlight' matched fg=green
-zstyle ':filter-select' max-lines 10 # don't fill the screen
+zstyle ':filter-select' max-lines 10         # don't fill the screen
 zstyle ':filter-select' case-insensitive yes # enable case-insensitive
-zstyle ':filter-select' extended-search yes # see below
+zstyle ':filter-select' extended-search yes  # see below
 
 if [[ -n $SSH_CLIENT ]]; then
     zstyle ':prezto:module:terminal:window-title' format "$USER@$HOST:%s"
