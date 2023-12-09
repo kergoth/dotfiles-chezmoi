@@ -11,7 +11,7 @@
 
   home.stateVersion = "22.05";
 
-  home.username = "{{ .chezmoi.group }}";
+  home.username = "{{ .chezmoi.username }}";
   home.homeDirectory = "{{ .chezmoi.homeDir }}";
 
   home.packages = with pkgs; [
