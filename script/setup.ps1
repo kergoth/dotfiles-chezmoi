@@ -4,7 +4,7 @@ function RefreshEnvPath {
 }
 
 # Use RemoteSigned execution policy for PowerShell. Needed for scoop, etc.
-Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+Set-ExecutionPolicy RemoteSigned -Scope Process -Force
 
 # Install chezmoi if necessary
 if (-Not (Get-Command chezmoi -ErrorAction SilentlyContinue)) {
