@@ -8,4 +8,4 @@ PATH="$PATH:$scriptdir:$sourcedir/scripts"
 
 sudo chown -R "$USER" "$HOME" 2>/dev/null || :
 
-bootstrap
+setup

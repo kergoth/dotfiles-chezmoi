@@ -11,7 +11,9 @@ if ! [ -e "$sourcedir/.chezmoiroot" ]; then
 fi
 
 if ! command -v chezmoi &>/dev/null; then
+    echo >&2 "Installing chezmoi"
     (cd && sh -c "$(curl -fsLS get.chezmoi.io/lb)")
 fi
 
+echo >&2 "Applying dotfiles"
 chezmoi init --apply ${sourcedir:+--source "$sourcedir"} kergoth/dotfiles-chezmoi
