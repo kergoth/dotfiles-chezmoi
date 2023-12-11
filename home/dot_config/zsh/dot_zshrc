@@ -31,12 +31,6 @@ fi
 # Emacs mode
 bindkey -e
 
-# use .localrc for SUPER SECRET CRAP that you don't
-# want in your public, versioned repo.
-if [[ -a ~/.localrc ]]; then
-    source ~/.localrc
-fi
-
 # pre-load plugin configuration
 AUTOENV_AUTH_FILE=$XDG_DATA_HOME/autoenv_authorized
 if [[ -n $ITERM_PROFILE ]]; then
