@@ -99,6 +99,10 @@ done
 
 unset config_files
 
+if [[ -e $ZDOTDIR/.zshrc.local ]]; then
+    . "$ZDOTDIR/.zshrc.local"
+fi
+
 if [[ "$ZSH_PROFILE_STARTUP_LINES" == true ]]; then
     unsetopt xtrace
     exec 2>&3 3>&-
