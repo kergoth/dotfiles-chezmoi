@@ -4,9 +4,14 @@ set -euo pipefail
 
 scriptdir=$(cd "$(dirname "$0")" && pwd -P)
 sourcedir=$(dirname "$scriptdir")
+PATH="$HOME/.local/bin:$PATH"
 
 if ! [ -e "$sourcedir/.chezmoiroot" ]; then
     sourcedir=
+fi
+
+if ! command -v chezmoi &>/dev/null; then
+    (cd && sh -c "$(curl -fsLS get.chezmoi.io/lb)")
 fi
 
 chezmoi init --apply ${sourcedir:+--source "$sourcedir"} kergoth/dotfiles-chezmoi
