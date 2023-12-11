@@ -136,7 +136,7 @@ if [[ ! -e /.dockerenv ]]; then
     esac
 fi
 
-for i in $XDG_CONFIG_HOME/*/env.zsh(N); do
+for i in $ZDOTDIR/.zshenv.d/*.zsh(N) $XDG_CONFIG_HOME/*/env.zsh(N); do
     . "$i"
 done
 
