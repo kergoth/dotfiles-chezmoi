@@ -6,7 +6,6 @@
 {{- $interactive := and stdinIsATTY (not $chezmoiForce) -}}
 
 sourceDir = {{ .chezmoi.sourceDir | quote }}
-pager = "git-pager"
 
 [data]
 {{- if or $container (not $interactive) }}
@@ -27,6 +26,17 @@ pager = "git-pager"
     in_codespace = {{ $codespaces }}
     in_devcontainer = {{ $devcontainer }}
     in_container = {{ $container }}
+{{- if eq .chezmoi.os "darwin" }}
+    {{- $computerName := output "scutil" "--get" "ComputerName" | trim }}
+    {{- $osVersion := output "sw_vers" "-productVersion" | trim }}
+    {{- $splitVersion := splitList "." $osVersion }}
+    {{- $majorVersion := index $splitVersion 0 }}
+    {{- $minorVersion := index $splitVersion 1 }}
+    computer_name = {{ $computerName | quote }}
+    os_version = {{ $majorVersion }}.{{ $minorVersion }}
+    major_version = {{ $majorVersion }}
+    minor_version = {{ $minorVersion }}
+{{- end }}
 
 [interpreters.ps1]
     command = "pwsh"
