@@ -152,6 +152,12 @@ function Copy-SSH-Id {
 }
 Add-Alias ssh-copy-id Copy-SSH-Id
 
+if (Get-Command nvim -ErrorAction SilentlyContinue) {
+    if (-Not (Get-Command vim -ErrorAction SilentlyContinue)) {
+        Add-Alias vim nvim
+    }
+}
+
 if (Get-Command starship) {
     Invoke-Expression (&starship init powershell)
 }
