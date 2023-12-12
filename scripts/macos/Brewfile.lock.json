@@ -5,7 +5,7 @@
         "revision": "a5baee188b8f72d8d14ce723965554c8b38f515a"
       },
       "homebrew/cask-versions": {
-        "revision": "9cc5d1262f234839cdb8cf68e809ebea5fb63efc"
+        "revision": "b9530667e3da0a4f729de6da0f92ac0f192b3e0e"
       }
     },
     "brew": {
@@ -420,7 +420,7 @@
     "mas": {
       "1Password for Safari": {
         "id": "1569813296",
-        "version": "2.17.1"
+        "version": "2.18.0"
       },
       "AdGuard for Safari": {
         "id": "1440147259",
@@ -500,7 +500,7 @@
       },
       "Spark": {
         "id": "1176895641",
-        "version": "2.11.35"
+        "version": "2.11.36"
       },
       "StopTheMadness": {
         "id": "1376402589",
@@ -525,7 +525,7 @@
       "Userscripts": null,
       "Vinegar": {
         "id": "1591303229",
-        "version": "2.8.1"
+        "version": "2.8.8"
       },
       "WiFi Explorer": {
         "id": "494803304",
@@ -540,12 +540,12 @@
   "system": {
     "macos": {
       "sonoma": {
-        "HOMEBREW_VERSION": "4.1.25-12-ge4b03d1",
+        "HOMEBREW_VERSION": "4.1.25-34-g7755004",
         "HOMEBREW_PREFIX": "/Users/kergoth/.brew",
         "Homebrew/homebrew-core": "api",
-        "CLT": "15.0.0.0.1.1694021235",
+        "CLT": "15.1.0.0.1.1700200546",
         "Xcode": "15.0",
-        "macOS": "14.1.2"
+        "macOS": "14.2"
       }
     }
   }
