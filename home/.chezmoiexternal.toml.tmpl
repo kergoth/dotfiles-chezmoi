@@ -85,11 +85,6 @@ exact = true
 stripComponents = 1
 refreshPeriod = "168h"
 
-["bin"]
-type = "git-repo"
-url = "https://github.com/kergoth/scripts"
-refreshPeriod = "168h"
-
 [".config/vim"]
 type = "git-repo"
 url = "https://github.com/kergoth/dotvim"
@@ -117,6 +112,25 @@ url = "https://github.com/kergoth/dotvim/archive/master.tar.gz"
 path = "vimrc.redir"
 exact = true
 stripComponents = 1
+refreshPeriod = "168h"
+
+[".local/share/zsh/completions/_cht"]
+type = "file"
+url = "https://cheat.sh/:zsh"
+refreshPeriod = "168h"
+
+{{ if eq .chezmoi.os "windows" }}
+["AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/RoamingState/archlinux-icon-crystal.svg"]
+type = "archive-file"
+url = "https://sources.archlinux.org/other/artwork/archlinux-artwork-1.6.tar.gz"
+path = "icons/archlinux-icon-crystal-32.svg"
+refreshPeriod = "168h"
+stripComponents = 1
+{{ else }}
+
+["bin"]
+type = "git-repo"
+url = "https://github.com/kergoth/scripts"
 refreshPeriod = "168h"
 
 [".local/bin"]
@@ -236,17 +250,4 @@ type = "file"
 url = "https://cheat.sh/:cht.sh"
 executable = true
 refreshPeriod = "168h"
-
-[".local/share/zsh/completions/_cht"]
-type = "file"
-url = "https://cheat.sh/:zsh"
-refreshPeriod = "168h"
-
-{{ if eq .chezmoi.os "windows" }}
-["AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/RoamingState/archlinux-icon-crystal.svg"]
-type = "archive-file"
-url = "https://sources.archlinux.org/other/artwork/archlinux-artwork-1.6.tar.gz"
-path = "icons/archlinux-icon-crystal-32.svg"
-refreshPeriod = "168h"
-stripComponents = 1
 {{- end }}
