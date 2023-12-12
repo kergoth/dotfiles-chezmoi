@@ -2,6 +2,6 @@
 
 set -euo pipefail
 
-if [ -e "${CHEZMOI_HOME_DIR:-$HOME}"/.config/vim/script/install ]; then
-    "${CHEZMOI_HOME_DIR:-$HOME}"/.config/vim/script/install
+if [ -e "${CHEZMOI_HOME_DIR:-$HOME}"/.config/vim/script/update ]; then
+    "${CHEZMOI_HOME_DIR:-$HOME}"/.config/vim/script/update -b
 fi
