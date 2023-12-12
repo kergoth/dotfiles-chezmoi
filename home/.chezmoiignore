@@ -1,6 +1,12 @@
 {{- if ne .chezmoi.os "windows" }}
 AppData/
 Documents/PowerShell/
+.chezmoiscripts/gitconfig.ps1
+.chezmoiscripts/vim.ps1
+{{- else }}
+.chezmoiscripts/gitconfig
+.chezmoiscripts/home-manager
+.chezmoiscripts/vim
 {{- end }}
 {{- if ne .chezmoi.os "darwin" }}
 Library/
