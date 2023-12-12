@@ -75,24 +75,24 @@ Set-PSReadLineKeyHandler -Key Alt+F -Function SelectShellForwardWord
 Set-PSReadlineOption -BellStyle None
 
 # Linux/Mac command muscle memory
-if (Get-Command exa) {
-    # TODO: Make a proper exa function with powershell-style arguments that translate to exa args
-    function Get-ExaChildItem {
-        exa --colour-scale all @args
+if (Get-Command eza) {
+    # TODO: Make a proper eza function with powershell-style arguments that translate to eza args
+    function Get-ezaChildItem {
+        eza --colour-scale all @args
     }
-    function Get-ExaChildItemHidden {
-        exa --colour-scale all -a @args
+    function Get-ezaChildItemHidden {
+        eza --colour-scale all -a @args
     }
-    function Get-ExaChildItemDetailed {
-        exa --colour-scale all -l @args
+    function Get-ezaChildItemDetailed {
+        eza --colour-scale all -l @args
     }
-    function Get-ExaChildItemSorted {
-        exa --colour-scale all -s modified @args
+    function Get-ezaChildItemSorted {
+        eza --colour-scale all -s modified @args
     }
-    New-Alias ls Get-ExaChildItem -Force
-    New-Alias la Get-ExaChildItemHidden -Force
-    New-Alias ll Get-ExaChildItemDetailed -Force
-    New-Alias lr Get-ExaChildItemSorted -Force
+    New-Alias ls Get-ezaChildItem -Force
+    New-Alias la Get-ezaChildItemHidden -Force
+    New-Alias ll Get-ezaChildItemDetailed -Force
+    New-Alias lr Get-ezaChildItemSorted -Force
 } else {
     New-Alias ls Get-ChildItem -Force
 }
