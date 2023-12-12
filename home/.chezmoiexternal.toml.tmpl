@@ -95,7 +95,11 @@ type = "git-repo"
 url = "https://github.com/kergoth/dotvim"
 refreshPeriod = "168h"
 
+{{ if eq .chezmoi.os "windows" }}
+["_vimrc"]
+{{ else }}
 [".vimrc"]
+{{ end }}
 type = "archive-file"
 url = "https://github.com/kergoth/dotvim/archive/master.tar.gz"
 path = "vimrc.redir"
@@ -103,7 +107,11 @@ exact = true
 stripComponents = 1
 refreshPeriod = "168h"
 
+{{ if eq .chezmoi.os "windows" }}
+["AppData/Local/nvim/init.vim"]
+{{ else }}
 [".config/nvim/init.vim"]
+{{ end }}
 type = "archive-file"
 url = "https://github.com/kergoth/dotvim/archive/master.tar.gz"
 path = "vimrc.redir"
