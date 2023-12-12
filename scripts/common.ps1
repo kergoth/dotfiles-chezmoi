@@ -1,4 +1,6 @@
-Import-Module -Name BitsTransfer
+if ($IsWindows) {
+    Import-Module -Name BitsTransfer
+}
 
 function RefreshEnvPath {
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") `
