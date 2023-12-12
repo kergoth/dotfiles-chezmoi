@@ -28,6 +28,10 @@ pager = "git-pager"
     in_devcontainer = {{ $devcontainer }}
     in_container = {{ $container }}
 
+[interpreters.ps1]
+    command = "pwsh"
+    args = ["-NoLogo"]
+
 [merge]
     #command = "nvim"
     #args = ["-d", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]
