@@ -13,18 +13,20 @@ msg "Initializing and applying dotfiles"
 if ! command -v chezmoi &>/dev/null; then
     (cd ~ && sh -c "$(curl -fsLS get.chezmoi.io/lb)")
 fi
-chezmoi init "--source=$repodir/.." kergoth/dotfiles-chezmoi
+chezmoi init "--source=$repodir" kergoth/dotfiles-chezmoi
 chezmoi apply
 
 # Install PowerShell modules, if needed
 if has pwsh; then
+    msg "Installing PowerShell modules"
     # Ignore failure, as these are not critical to my workflow, and can fail due
     # to transient network issues.
-    pwsh -nop "./scripts/install-pwsh-modules.ps1" || :
+    pwsh -NoProfile "$scriptdir/install-pwsh-modules.ps1" || :
 fi
 
 # Install dtrx, if unar is missing
 if ! command -v unar &>/dev/null; then
+    msg "Installing dtrx"
     if ! command -v pipx &>/dev/null; then
         python3 -m pip install --user --disable-pip-version-check pipx
         python3 -m pipx ensurepath
