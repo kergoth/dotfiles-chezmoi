@@ -3,8 +3,9 @@ typeset -U config_files
 config_files=($ZDOTDIR/.zshrc.d/*.zsh(N) $XDG_CONFIG_HOME/*/*.zsh(N))
 
 # load the path files
+source $ZDOTDIR/.zshrc.d/path.zsh
 for file in ${(M)config_files:#*/path.zsh}; do
-    if [[ $file = $ZDOTDIR/path.zsh ]]; then
+    if [[ $file = $ZDOTDIR/.zshrc.d/path.zsh ]]; then
         continue
     fi
     source $file
