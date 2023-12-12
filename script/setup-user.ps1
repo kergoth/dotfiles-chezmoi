@@ -152,4 +152,4 @@ if (-Not (Get-Command pipx -ErrorAction SilentlyContinue)) {
     RefreshEnvPath
 }
 
-Write-Output "Setup complete"
+Write-Output "User setup complete"
