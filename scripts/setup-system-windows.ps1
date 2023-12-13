@@ -71,7 +71,7 @@ catch {
 RefreshEnvPath
 
 # Install GUI apps
-winget import $PSScriptRoot\windows\winget.json
+winget import --import-file $PSScriptRoot\windows\winget.json --ignore-versions --no-upgrade --disable-interactivity
 
 # Install Visual Studio C++ Desktop Workload
 winget install Microsoft.VisualStudio.2022.Community --silent --override "--wait --quiet --add ProductLang En-us --add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended"
