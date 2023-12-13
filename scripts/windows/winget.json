@@ -1,10 +1,10 @@
 {
 	"$schema" : "https://aka.ms/winget-packages.schema.2.0.json",
-	"CreationDate" : "2021-08-12T09:07:57.006-00:00",
-	"Sources" :
+	"CreationDate" : "2023-12-13T08:27:34.134-00:00",
+	"Sources" : 
 	[
 		{
-			"Packages" :
+			"Packages" : 
 			[
 				{ "PackageIdentifier" : "7zip.7zip" },
 				{ "PackageIdentifier" : "AgileBits.1Password" },
@@ -16,7 +16,7 @@
 				{ "PackageIdentifier" : "Microsoft.PowerShell" },
 				{ "PackageIdentifier" : "Microsoft.PowerToys" },
 				{ "PackageIdentifier" : "Microsoft.Teams" },
-				{ "PackageIdentifier" : "Microsoft.VisualStudio.2022.BuildTools"}
+				{ "PackageIdentifier" : "Microsoft.VisualStudio.2022.BuildTools"},
 				{ "PackageIdentifier" : "Microsoft.VisualStudioCode" },
 				{ "PackageIdentifier" : "Microsoft.WindowsTerminal" },
 				{ "PackageIdentifier" : "Notepad++.Notepad++" },
@@ -35,18 +35,18 @@
 			}
 		},
 		{
-			"Packages" : 
+			"Packages" :
 			[
-				{ "PackageIdentifier" : "9NPZ2TVKJVT7" } // SnipDo
+					{ "PackageIdentifier" : "9NPZ2TVKJVT7" } // SnipDo
 			],
-			"SourceDetails" : 
+			"SourceDetails" :
 			{
-				"Argument" : "https://storeedgefd.dsx.mp.microsoft.com/v9.0",
-				"Identifier" : "StoreEdgeFD",
-				"Name" : "msstore",
-				"Type" : "Microsoft.Rest"
+					"Argument" : "https://storeedgefd.dsx.mp.microsoft.com/v9.0",
+					"Identifier" : "StoreEdgeFD",
+					"Name" : "msstore",
+					"Type" : "Microsoft.Rest"
 			}
 		}
 	],
-	"WinGetVersion" : "1.0.11692"
+	"WinGetVersion" : "1.6.3421"
 }
