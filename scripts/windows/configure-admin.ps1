@@ -171,7 +171,7 @@ function Invoke-Sophia {
     Errors
 }
 
-. $PSScriptRoot\common.ps1
+. $PSScriptRoot\..\common.ps1
 
 # SSH
 Write-Output "Enabling SSH agent"
