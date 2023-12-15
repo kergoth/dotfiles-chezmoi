@@ -12,10 +12,14 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
     email = "kergoth@gmail.com"
     name = "Christopher Larson"
     github_username = "kergoth"
+    is_home = false
+    is_siemens = false
 {{- else }}
     email = {{ promptStringOnce . "email" "Email address" "kergoth@gmail.com" | quote }}
     name = {{ promptStringOnce . "name" "Full name" "Christopher Larson" | quote }}
     github_username = {{ promptStringOnce . "github_username" "GitHub username" "kergoth" | quote }}
+    is_home = {{ promptBoolOnce . "home" "Will this device be used on your home network" false }}
+    is_siemens = {{ promptBoolOnce . "siemens" "Will this device be used on a Siemens network" false }}
 {{- end }}
 
 {{- if eq .chezmoi.arch "amd64" }}
