@@ -12,4 +12,10 @@ ControlMaster auto
 ControlPersist yes
 ControlPath ~/.ssh/socket.%r@%h:%p
 {{- end }}
+{{ if .is_home }}
+{{ onepasswordDocument "q42ifclab34ejjwjpna3b7bewe" -}}
+{{ end -}}
+{{ if .is_siemens }}
+{{ onepasswordDocument "g2cs62d5w7z6v7kfqhngdrkksa" -}}
+{{ end -}}
 
