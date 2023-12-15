@@ -1,5 +1,7 @@
 # Kergoth's Dotfiles and Setup Scripts
 
+[![BlueOak 1.0.0 License](https://img.shields.io/badge/License-BlueOak%201.0.0-2D6B79.svg)](https://spdx.org/licenses/BlueOak-1.0.0.html)
+
 This repository includes scripts for setting up systems per my personal
 preferences.
 
@@ -119,6 +121,10 @@ Contributions of all kinds, including feedback, are always welcome!
 See [CONTRIBUTING.md](CONTRIBUTING.md) for ways to get started.
 
 Please adhere to this project's [Code of Conduct](CODE_OF_CONDUCT.md) and follow [The Ethical Source Principles](https://ethicalsource.dev/principles/).
+
+## License
+
+Distributed under the terms of the [Blue Oak Model License 1.0.0](LICENSE.md) license.
 
 ## See Also
 
