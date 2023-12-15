@@ -1,8 +1,10 @@
-# README
+# Kergoth's Dotfiles and Setup Scripts
 
 ## Usage
 
-### Initial setup
+### Initial dotfiles setup
+
+This setup will apply the dotfiles, and will also install packages with home-manager, if nix is installed.
 
 If the repository has not yet been cloned:
 
@@ -10,10 +12,42 @@ If the repository has not yet been cloned:
 chezmoi init --apply kergoth/dotfiles-chezmoi
 ```
 
-If the repository is already cloned:
+If the repository is already cloned and you've changed directory to it:
 
 ```console
-./script/bootstrap
+./script/setup
+```
+
+### User Setup
+
+This setup will apply the dotfiles, but will also apply other changes to the current user configuration.
+
+After cloning the repository, and changing directory to it, run:
+
+```console
+./script/setup-user
+```
+
+On windows (in powershell, not WSL), run this instead:
+
+```console
+./script/setup-user.ps1
+```
+
+### System Setup
+
+This setup will apply changes to the system as a whole. This may include installing packages through the package manager, installing nix, et cetera. Ideally this should be run prior to setting up the user, and should be run as a user with sudo access.
+
+After cloning the repository, and changing directory to it, run:
+
+```console
+./script/setup-system
+```
+
+On windows (in powershell, not WSL), run this instead:
+
+```console
+./script/setup-system.ps1
 ```
 
 ### Edit dotfiles
