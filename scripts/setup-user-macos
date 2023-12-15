@@ -3,6 +3,7 @@
 set -euo pipefail
 
 scriptdir=$(cd "$(dirname "$0")" && pwd -P)
+repodir=$(dirname "$scriptdir")
 PATH="$scriptdir/macos:$scriptdir:$PATH"
 
 # shellcheck source=./common.sh
@@ -31,6 +32,12 @@ case "$(sw_vers -productVersion)" in
     "$HOMEBREW_PREFIX/bin/brew" bundle --no-upgrade install --file="$scriptdir/macos/Brewfile-pre-Sonoma"
     ;;
 esac
+
+# Dotfiles
+msg "Initializing and applying dotfiles"
+chezmoi init "--source=$repodir" kergoth/dotfiles-chezmoi
+chmod 0600 "$HOME/.config/chezmoi/chezmoi.toml"
+chezmoi apply
 
 msg "Configuring"
 "$scriptdir/macos/configure"
