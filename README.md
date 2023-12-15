@@ -76,6 +76,13 @@ chezmoi update -R
 ./script/update
 ```
 
+## Supported Platforms
+
+- Linux. Tested on Arch, Ubuntu, and Debian.
+- MacOS.
+- FreeBSD.
+- Windows.
+
 ## Implementation Notes
 
 - Chezmoi is used to apply my dotfiles changes.
