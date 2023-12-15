@@ -1,5 +1,12 @@
 # Kergoth's Dotfiles and Setup Scripts
 
+This repository includes scripts for setting up systems per my personal
+preferences.
+
+## Prerequisites
+
+- (On macOS) Command-Line Tools or XCode must be installed (See scripts/extras/ for scripts to install these).
+
 ## Usage
 
 ### Initial dotfiles setup
@@ -101,6 +108,27 @@ chezmoi update -R
 - [Handle different file locations on different systems with the same contents](https://www.chezmoi.io/user-guide/manage-machine-to-machine-differences/#handle-different-file-locations-on-different-systems-with-the-same-contents)
 - [Use completely different dotfiles on different machines](https://www.chezmoi.io/user-guide/manage-machine-to-machine-differences/#use-completely-different-dotfiles-on-different-machines)
 
-## Reminders
+## Help
 
-- .chezmoitemplates can be used for creating similar but not identical files
+Questions and comments are always welcome, please open an issue.
+
+## Contributing
+
+Contributions of all kinds, including feedback, are always welcome!
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for ways to get started.
+
+Please adhere to this project's [Code of Conduct](CODE_OF_CONDUCT.md) and follow [The Ethical Source Principles](https://ethicalsource.dev/principles/).
+
+## See Also
+
+### Superseded Projects
+
+- [system-setup](https://github.com/kergoth/system-setup)
+- [mac-setup](https://github.com/kergoth/mac-setup)
+- [win-setup](https://github.com/kergoth/win-setup)
+- [dotfiles/system-setup](https://github.com/kergoth/dotfiles/tree/d9bdcb2187ea66847a21ebd6591c0f1ec1a3f0a5/system-setup)
+
+### Partially Superseded Projects
+
+- [arch-setup](https://github.com/kergoth/arch-setup)
