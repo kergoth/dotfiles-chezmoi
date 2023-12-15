@@ -17,3 +17,4 @@ fi
 
 echo >&2 "Applying dotfiles"
 chezmoi init --apply ${sourcedir:+--source "$sourcedir"} kergoth/dotfiles-chezmoi
+chmod 0600 "$HOME/.config/chezmoi/chezmoi.toml"

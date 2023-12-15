@@ -14,6 +14,7 @@ if ! command -v chezmoi &>/dev/null; then
     (cd ~ && sh -c "$(curl -fsLS get.chezmoi.io/lb)")
 fi
 chezmoi init "--source=$repodir" kergoth/dotfiles-chezmoi
+chmod 0600 "$HOME/.config/chezmoi/chezmoi.toml"
 chezmoi apply
 
 # Install PowerShell modules, if needed

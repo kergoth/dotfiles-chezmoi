@@ -97,4 +97,3 @@ chezmoi update -R
 ## Reminders
 
 - .chezmoitemplates can be used for creating similar but not identical files
-- Remember to do a `chmod 0600 "$HOME/.config/chezmoi/chezmoi.toml"` after `chezmoi init`, once I start adding secrets to the chezmoi.toml.
