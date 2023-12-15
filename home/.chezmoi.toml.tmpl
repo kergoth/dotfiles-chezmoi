@@ -36,6 +36,8 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
     os_version = {{ $majorVersion }}.{{ $minorVersion }}
     major_version = {{ $majorVersion }}
     minor_version = {{ $minorVersion }}
+{{- else }}
+    computer_name = {{ .chezmoi.hostname }}
 {{- end }}
 
 [interpreters.ps1]
