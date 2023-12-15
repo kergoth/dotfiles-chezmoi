@@ -41,7 +41,7 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
     major_version = {{ $majorVersion }}
     minor_version = {{ $minorVersion }}
 {{- else }}
-    computer_name = {{ .chezmoi.hostname }}
+    computer_name = {{ .chezmoi.hostname | quote }}
 {{- end }}
 
 [interpreters.ps1]
