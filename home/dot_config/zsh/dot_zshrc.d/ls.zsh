@@ -6,12 +6,14 @@ if (( $+commands[eza] )); then
     alias la='ls -a'
     alias lr='ll -s modified'
     alias lrc='lr -s created'
+    alias ll='ls -lg'
 elif (( $+commands[exa] )); then
     alias exa='exa --colour-scale'
     alias ls=exa
     alias la='ls -a'
     alias lr='ll -s modified'
     alias lrc='lr -s created'
+    alias ll='ls -lg'
 elif [[ $OSTYPE =~ darwin ]] || [[ $OSTYPE =~ freebsd ]]; then
     if (( $+commands[gls] )); then
         alias ls='gls --color=auto -h'
@@ -24,12 +26,13 @@ elif [[ $OSTYPE =~ darwin ]] || [[ $OSTYPE =~ freebsd ]]; then
     alias la='ls -A'
     alias lr='ll -tr'
     alias lrc='lr -U'
+    alias ll='ls -l'
 else
     alias ls='ls --color=auto -h'
     alias la='ls -A'
     alias lr='ll -tr'
     alias lrc='lr -c'
+    alias ll='ls -l'
 fi
 
-alias ll='ls -l'
 alias l='ls -1'
