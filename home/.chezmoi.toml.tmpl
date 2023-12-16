@@ -18,8 +18,13 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
     email = {{ promptStringOnce . "email" "Email address" "kergoth@gmail.com" | quote }}
     name = {{ promptStringOnce . "name" "Full name" "Christopher Larson" | quote }}
     github_username = {{ promptStringOnce . "github_username" "GitHub username" "kergoth" | quote }}
+    {{- if ne .chezmoi.os "freebsd" }}
     is_home = {{ promptBoolOnce . "is_home" "Will this device be used on your home network" false }}
     is_siemens = {{ promptBoolOnce . "is_siemens" "Will this device be used on a Siemens network" false }}
+    {{- else }}
+    is_home = false
+    is_siemens = false
+    {{- end}}
 {{- end }}
 
 {{- if eq .chezmoi.arch "amd64" }}
