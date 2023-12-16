@@ -7,15 +7,16 @@ if (( $+commands[less] )); then
     export PAGER=less
 
     if ! (( $+commands[bat] )); then
-	man () {
+        man() {
             env \
-                LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-                LESS_TERMCAP_md=$(printf "\e[1;31m") \
-                LESS_TERMCAP_me=$(printf "\e[0m") \
-                LESS_TERMCAP_se=$(printf "\e[0m") \
-                LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-                LESS_TERMCAP_ue=$(printf "\e[0m") \
-                LESS_TERMCAP_us=$(printf "\e[1;32m") \
+                LESS_TERMCAP_mb=$'\e[1;31m' \
+                LESS_TERMCAP_md=$'\e[1;34m' \
+                LESS_TERMCAP_so=$'\e[01;45;37m' \
+                LESS_TERMCAP_us=$'\e[01;36m' \
+                LESS_TERMCAP_me=$'\e[0m' \
+                LESS_TERMCAP_se=$'\e[0m' \
+                LESS_TERMCAP_ue=$'\e[0m' \
+                GROFF_NO_SGR=1 \
                 man "$@"
         }
     fi
