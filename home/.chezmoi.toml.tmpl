@@ -58,3 +58,10 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
     #args = ["-d", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]
     command = "code"
     args = ["--wait", "--merge", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}"]
+
+[hooks.read-source-state.pre]
+{{- if eq .chezmoi.os "windows" }}
+    command = ".local/share/chezmoi/home/.chezmoihooks/install-password-manager.ps1"
+{{- else }}
+    command = ".local/share/chezmoi/home/.chezmoihooks/install-password-manager.sh"
+{{- end }}

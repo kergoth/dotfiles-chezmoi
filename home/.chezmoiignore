@@ -12,6 +12,8 @@ Documents/PowerShell/
 Library/
 {{- end }}
 
+.chezmoihooks
+.chezmoihooks/**
 .bash_history
 .cache
 .config/chezmoi
