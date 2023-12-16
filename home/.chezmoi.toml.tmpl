@@ -8,7 +8,7 @@
 sourceDir = {{ .chezmoi.sourceDir | quote }}
 
 [data]
-{{- if or $container (not $interactive) }}
+{{- if and (not $interactive) (not $codespaces) }}
     email = "kergoth@gmail.com"
     name = "Christopher Larson"
     github_username = "kergoth"
