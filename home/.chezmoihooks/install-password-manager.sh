@@ -7,6 +7,9 @@ if command -v op >/dev/null 2>&1; then
     exit
 fi
 
+tmpdir=$(mktemp -d -t install-package-manager.XXXXXX)
+trap 'rm -rf "$tmpdir"' EXIT INT TERM
+
 case "$(uname -s)" in
 Darwin)
     if ! [ -x "$HOMEBREW_PREFIX/bin/brew" ]; then
@@ -35,8 +38,8 @@ Linux)
         exit 1
         ;;
     esac
-    wget "https://cache.agilebits.com/dist/1P/op2/pkg/v2.24.0/op_linux_${ARCH}_v2.24.0.zip" -O op.zip &&
-        unzip -d ~/.local/bin op.zip op
+    wget "https://cache.agilebits.com/dist/1P/op2/pkg/v2.24.0/op_linux_${ARCH}_v2.24.0.zip" -O "$tmpdir/op.zip" &&
+        unzip -d ~/.local/bin "$tmpdir/op.zip" op
     chmod +x ~/.local/bin/op
     ;;
 *)
