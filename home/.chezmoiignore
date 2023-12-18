@@ -15,7 +15,9 @@ Library/
 .chezmoihooks
 .chezmoihooks/**
 .bash_history
-.cache
+.cache/*
+!.cache/zsh
+.cache/zsh/*
 .config/chezmoi
 .config/environment.d/10-home-manager.conf
 .config/gh/hosts.yml
