@@ -31,7 +31,7 @@ tmpfile=$(mktemp -t "${0##*/}.XXXXXX")
 trap on_exit EXIT INT TERM
 
 echo >&2 "Updating chezmoi"
-chezmoi upgrade
+chezmoi upgrade || :
 
 echo >&2 "Updating dotfiles repository"
 chezmoi update -R
