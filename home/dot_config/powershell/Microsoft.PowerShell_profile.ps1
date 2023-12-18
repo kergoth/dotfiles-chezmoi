@@ -143,6 +143,7 @@ if (Get-Command nvim -ErrorAction SilentlyContinue) {
         Add-Alias vim nvim
     }
 }
+Add-Alias vi vim
 
 if (Get-Command starship) {
     Invoke-Expression (&starship init powershell)
