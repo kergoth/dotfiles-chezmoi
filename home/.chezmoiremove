@@ -2,5 +2,7 @@
 .gitconfig
 .viminfo
 .zcompdump
+.zlogin
+.zlogout
 .zprofile
 .zshrc
