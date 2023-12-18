@@ -1,6 +1,10 @@
 Import-Module Recycle
 Import-Module posh-alias
 
+if (Get-Command starship) {
+    Invoke-Expression (&starship init powershell)
+}
+
 # Dracula readline configuration. Requires version 2.0, if you have 1.2 convert to `Set-PSReadlineOption -TokenType`
 Set-PSReadlineOption -Color @{
     "Command"   = [ConsoleColor]::Green
@@ -144,10 +148,6 @@ if (Get-Command nvim -ErrorAction SilentlyContinue) {
     }
 }
 Add-Alias vi vim
-
-if (Get-Command starship) {
-    Invoke-Expression (&starship init powershell)
-}
 
 if (Test-Path "$env:USERPROFILE\.local.ps1") {
     . "$env:USERPROFILE\.local.ps1"
