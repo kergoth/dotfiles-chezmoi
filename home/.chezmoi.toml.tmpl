@@ -61,7 +61,8 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
 
 [hooks.read-source-state.pre]
 {{- if eq .chezmoi.os "windows" }}
-    command = ".local/share/chezmoi/home/.chezmoihooks/install-password-manager.ps1"
+    command = "pwsh.exe"
+    args = ["-NoLogo", ".local/share/chezmoi/home/.chezmoihooks/install-password-manager.ps1"]
 {{- else }}
     command = ".local/share/chezmoi/home/.chezmoihooks/install-password-manager.sh"
 {{- end }}
