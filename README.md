@@ -420,6 +420,7 @@ The intention is to incorporate the installation of Nix on all systems in time.
 
 - [Autoruns](https://learn.microsoft.com/en-us/sysinternals/downloads/autoruns) (from [Sysinternals](https://learn.microsoft.com/en-us/sysinternals/))
 - [Balena Etcher](https://www.balena.io/etcher/)
+- [Bulk Crap Uninstaller](https://www.bcuninstaller.com): Remove large amounts of unwanted applications quickly. This is an [open source](https://github.com/Klocman/Bulk-Crap-Uninstaller) alternative to [Revo Uninstaller](https://www.revouninstaller.com). Available via scoop as `bulk-crap-uninstaller`. The project is currently looking for maintainers, so I may look for an alternative in the future.
 - [Paint.NET](https://getpaint.net)
 - [Process Explorer](https://learn.microsoft.com/en-us/sysinternals/downloads/process-explorer) (from [Sysinternals](https://learn.microsoft.com/en-us/sysinternals/))
 - [WinDirStat](https://windirstat.net/)
