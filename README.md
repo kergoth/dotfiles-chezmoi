@@ -416,7 +416,7 @@ The intention is to incorporate the installation of Nix on all systems in time.
 - [SwiftBar](https://swiftbar.app/)]: Powerful macOS menu bar customization tool.
 - [Wineskin](https://github.com/Gcenx/WineskinServer): A user-friendly tool used to make ports of Microsoft Windows software to macOS. Available via brew as `gcenx/wine/unofficial-wineskin`.
 
-#### As Needed GUI Software for Windows (All are available via winget)
+#### As Needed GUI Software for Windows (All but BCU are available via winget)
 
 - [Autoruns](https://learn.microsoft.com/en-us/sysinternals/downloads/autoruns) (from [Sysinternals](https://learn.microsoft.com/en-us/sysinternals/))
 - [Balena Etcher](https://www.balena.io/etcher/)
